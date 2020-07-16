@@ -2,14 +2,10 @@
     "firstName": "John",
     "lastName": "Smith",
     "age": 25,
-    "address": {
-        "streetAddress": "21 2nd Street",
-        "city": "New York",
-        "state": "NY",
-        "postalCode": "10021"
-    },
+    "address": null,
     "res_id": null,
-    "movePath": [{
+    "movePath": [
+        {
             "pos_x": 187,
             "pos_y": 212
         },
@@ -19,8 +15,6 @@
         }
     ],
     "model_ids": [
-        101,
-        301,
         201
     ]
 }

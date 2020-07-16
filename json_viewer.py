@@ -17,12 +17,7 @@ from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-
-
-class JsonTreeItem:
+class TextToTreeItem:
 
     def __init__(self):
         self.text_list = []
@@ -46,15 +41,18 @@ class JsonTreeItem:
 
 class JsonView(QtWidgets.QWidget):
 
-    def __init__(self):
+    def __init__(self, fpath):
         super(JsonView, self).__init__()
 
         self.find_box = None
         self.tree_widget = None
-        self.text_to_titem = JsonTreeItem()
+        self.text_to_titem = TextToTreeItem()
         self.find_str = ""
         self.found_titem_list = []
         self.found_idx = 0
+
+        jfile = open(fpath)
+        jdata = json.load(jfile, object_pairs_hook=collections.OrderedDict)
 
         # Find UI
 
@@ -64,13 +62,11 @@ class JsonView(QtWidgets.QWidget):
 
         self.tree_widget = QtWidgets.QTreeWidget()
         self.tree_widget.setHeaderLabels(["Key", "Value"])
-        # self.tree_widget.header().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+        self.tree_widget.header().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
 
         root_item = QtWidgets.QTreeWidgetItem(["Root"])
-
+        self.recurse_jdata(jdata, root_item)
         self.tree_widget.addTopLevelItem(root_item)
-        root_item.setExpanded(True)
-        self.tree_root = root_item
 
         # Add table to layout
 
@@ -79,7 +75,7 @@ class JsonView(QtWidgets.QWidget):
 
         # Group box
 
-        gbox = QtWidgets.QGroupBox("JsonEditor")
+        gbox = QtWidgets.QGroupBox(fpath)
         gbox.setLayout(layout)
 
         layout2 = QtWidgets.QVBoxLayout()
@@ -123,65 +119,47 @@ class JsonView(QtWidgets.QWidget):
 
         self.tree_widget.setCurrentItem(self.found_titem_list[self.found_idx])
 
-    def update_view(self, fpath):
-        jfile = open(fpath)
-        jdata = json.load(jfile, object_pairs_hook=collections.OrderedDict)
 
-        self.tree_widget.clear()
-        self.recurse_jdata(jdata)
-
-    def recurse_jdata(self, jdata, tree_parent=None):
+    def recurse_jdata(self, jdata, tree_widget):
 
         if isinstance(jdata, dict):
             for key, val in jdata.items():
-                self.tree_add_row(key, val, tree_parent)
+                self.tree_add_row(key, val, tree_widget)
         elif isinstance(jdata, list):
             for i, val in enumerate(jdata):
                 key = str(i)
-                self.tree_add_row(key, val, tree_parent)
+                self.tree_add_row(key, val, tree_widget)
         else:
             print("This should never be reached!")
 
-    def tree_add_row(self, key, val, tree_parent):
+    def tree_add_row(self, key, val, tree_widget):
 
         text_list = []
 
         if isinstance(val, dict) or isinstance(val, list):
             text_list.append(key)
-            node_name = "%s%s" % (key, str(type(val)))
-            row_item = QtWidgets.QTreeWidgetItem([node_name])
+            row_item = QtWidgets.QTreeWidgetItem([key])
             self.recurse_jdata(val, row_item)
         else:
             text_list.append(key)
             text_list.append(str(val))
             row_item = QtWidgets.QTreeWidgetItem([key, str(val)])
 
-        if tree_parent is None:
-            self.tree_widget.addTopLevelItem(row_item)
-        else:
-            tree_parent.addChild(row_item)
-
-        row_item.setExpanded(True)
-        row_item.setFlags(row_item.flags() | Qt.ItemIsEditable)
+        tree_widget.addChild(row_item)
         self.text_to_titem.append(text_list, row_item)
 
 
-class JsonEditor(QMainWindow, Ui_MainWindow):
+class JsonViewer(QtWidgets.QMainWindow):
 
-    def __init__(self, parent=None):
-        super(JsonEditor, self).__init__(parent=parent)
-        self.setupUi(self)
+    def __init__(self):
+        super(JsonViewer, self).__init__()
 
-        fpath = "test.json"  # sys.argv[1]
-        json_view = JsonView()
-        json_view.update_view(fpath)
+        fpath = "test.json"
+        json_view = JsonView(fpath)
 
         self.setCentralWidget(json_view)
         self.setWindowTitle("JSON Viewer")
         self.show()
-
-    def sizeHint(self):
-        return QSize(640, 480)
 
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_Escape:
@@ -190,7 +168,7 @@ class JsonEditor(QMainWindow, Ui_MainWindow):
 
 def main():
     qt_app = QtWidgets.QApplication(sys.argv)
-    json_editor = JsonEditor()
+    json_viewer = JsonViewer()
     sys.exit(qt_app.exec_())
 
 

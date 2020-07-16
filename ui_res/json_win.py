@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.json_view = QtWidgets.QTreeView(self.centralwidget)
+        self.json_view = QtWidgets.QTreeWidget(self.centralwidget)
         self.json_view.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.json_view.setObjectName("json_view")
         self.verticalLayout.addWidget(self.json_view)
@@ -41,4 +41,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.json_view.headerItem().setText(0, _translate("MainWindow", "key"))
+        self.json_view.headerItem().setText(1, _translate("MainWindow", "value"))
+        self.json_view.headerItem().setText(2, _translate("MainWindow", "type"))
         self.test_btn.setText(_translate("MainWindow", "Test"))

@@ -16,10 +16,25 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTreeView" name="json_view">
+     <widget class="QTreeWidget" name="json_view">
       <property name="contextMenuPolicy">
        <enum>Qt::CustomContextMenu</enum>
       </property>
+      <column>
+       <property name="text">
+        <string>key</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>value</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>type</string>
+       </property>
+      </column>
      </widget>
     </item>
     <item>
