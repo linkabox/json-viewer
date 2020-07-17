@@ -44,4 +44,5 @@ class Ui_MainWindow(object):
         self.json_view.headerItem().setText(0, _translate("MainWindow", "key"))
         self.json_view.headerItem().setText(1, _translate("MainWindow", "value"))
         self.json_view.headerItem().setText(2, _translate("MainWindow", "type"))
-        self.test_btn.setText(_translate("MainWindow", "Test"))
+        self.json_view.headerItem().setText(3, _translate("MainWindow", "uid"))
+        self.test_btn.setText(_translate("MainWindow", "Dump"))

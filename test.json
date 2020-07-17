@@ -1,23 +1,34 @@
 {
-    "firstName": "John",
-    "lastName": "Smith",
+    "name": "John",
     "age": 25,
-    "address": {
-        "streetAddress": "21 2nd Street",
-        "city": "New York",
-        "state": "NY",
-        "postalCode": "10021"
-    },
     "res_id": null,
-    "movePath": [{
-            "pos_x": 187,
-            "pos_y": 212
+    "movePointList": [{
+            "pos": {
+                "x": 187,
+                "y": 212
+            }
         },
         {
-            "pos_x": 646,
-            "pos_y": 78
+            "pos": {
+                "x": 646,
+                "y": 78
+            }
         }
     ],
+    "movePointMap": {
+        "1020": {
+            "pos": {
+                "x": 0,
+                "y": 1
+            }
+        },
+        "1180": {
+            "pos": {
+                "x": 8,
+                "y": 6
+            }
+        }
+    },
     "model_ids": [
         101,
         301,

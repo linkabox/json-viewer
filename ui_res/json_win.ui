@@ -35,12 +35,17 @@
         <string>type</string>
        </property>
       </column>
+      <column>
+       <property name="text">
+        <string>uid</string>
+       </property>
+      </column>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="test_btn">
       <property name="text">
-       <string>Test</string>
+       <string>Dump</string>
       </property>
      </widget>
     </item>
