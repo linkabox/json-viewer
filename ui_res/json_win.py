@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.json_view = QtWidgets.QTreeWidget(self.centralwidget)
+        self.json_view = JsonTreeWidget(self.centralwidget)
         self.json_view.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.json_view.setObjectName("json_view")
         self.verticalLayout.addWidget(self.json_view)
@@ -46,3 +46,4 @@ class Ui_MainWindow(object):
         self.json_view.headerItem().setText(2, _translate("MainWindow", "type"))
         self.json_view.headerItem().setText(3, _translate("MainWindow", "uid"))
         self.test_btn.setText(_translate("MainWindow", "Dump"))
+from json_treewidget import JsonTreeWidget
